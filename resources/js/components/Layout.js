@@ -1,16 +1,36 @@
 import React from 'react';
-import {AppBar, Button, IconButton, makeStyles, Toolbar, Typography} from "@material-ui/core";
-import MenuIcon from '@material-ui/icons/Menu';
+import {
+    AppBar,
+    Button,
+    Divider,
+    Drawer,
+    List,
+    ListItem, ListItemText,
+    makeStyles,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
+        display: 'flex',
     },
     title: {
         flexGrow: 1,
+    },
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    toolbar: theme.mixins.toolbar,
+    appBar: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth,
     },
 }));
 
@@ -27,23 +47,46 @@ function Layout(props) {
     };
 
     return (
-        <>
-            <AppBar position="static">
+        <div className={classes.root}>
+            <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         TodoList
                     </Typography>
                     <Button color="inherit" onClick={onLogout}>Logout</Button>
                 </Toolbar>
             </AppBar>
+            <nav className={classes.drawer} aria-label="mailbox folders">
+                    <Drawer
+                        classes={{
+                            paper: classes.drawerPaper,
+                        }}
+                        variant="permanent"
+                        open>
+                        <div className={classes.toolbar} />
+                        <Divider />
+                        <List>
+                            {['Today', 'All Tasks'].map((text, index) => (
+                                <ListItem button key={text}>
+                                    <ListItemText primary={text} />
+                                </ListItem>
+                            ))}
+                        </List>
+                        <Divider />
+                        <List>
+                            {['Projects'].map((text, index) => (
+                                <ListItem button key={text}>
+                                    <ListItemText primary={text} />
+                                </ListItem>
+                            ))}
+                        </List>
+                    </Drawer>
+            </nav>
 
             <main className="py-4">
                 {props.children}
             </main>
-        </>
+        </div>
     );
 }
 
