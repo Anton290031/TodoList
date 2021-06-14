@@ -20643,10 +20643,10 @@ function Login(_ref) {
           margin: "normal",
           required: true,
           fullWidth: true,
-          id: "email",
-          label: "Email Address",
-          name: "email",
-          autoComplete: "email",
+          id: "username",
+          label: "Username",
+          name: "username",
+          autoComplete: "username",
           autoFocus: true,
           onChange: function onChange(e) {
             return setName(e.target.value);
