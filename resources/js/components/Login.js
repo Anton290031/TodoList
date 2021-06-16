@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {Snackbar} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -38,6 +39,7 @@ function Login({onLogin}) {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
     const classes = useStyles();
 
     const onSubmit = (e) => {
@@ -54,7 +56,9 @@ function Login({onLogin}) {
                 history.push('/');
             }
         }).catch((error) => {
-            console.log(error.response);
+            setErrorMessage("Authentication failed");
+            setTimeout(() => setErrorMessage(null), 3000);
+            console.log(error.response.data);
         });
     };
 
@@ -113,6 +117,8 @@ function Login({onLogin}) {
                             </Link>
                         </Grid>
                     </Grid>
+                    <Snackbar open={errorMessage != null} message={errorMessage}>
+                    </Snackbar>
                 </form>
             </div>
         </Container>
