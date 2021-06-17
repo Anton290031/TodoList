@@ -10,9 +10,17 @@ function TodayTasks() {
             .then((response) => setTasks(response.data));
     },[]);
 
+    const onDelete = (taskId) => {
+        axios.delete("/api/task/" + taskId)
+            .then(response => {
+                if (response.status == 200)
+                    setTasks(tasks.filter((t) => t.id != taskId));
+            });
+    };
+
     return (
         <Layout>
-            <TaskList tasks={tasks}/>
+            <TaskList tasks={tasks} onDelete={onDelete}/>
         </Layout>
     );
 }

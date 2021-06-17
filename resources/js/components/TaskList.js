@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function TaskList({tasks}) {
+function TaskList({tasks, onDelete}) {
     const classes = useStyles();
 
     return (
@@ -54,7 +54,7 @@ function TaskList({tasks}) {
                                 />
                             </ListItemIcon>
                             <ListItemText id={labelId} primary={task.title} />
-                            <ListItemSecondaryAction>
+                            <ListItemSecondaryAction onClick={() => onDelete(task.id)}>
                                 <IconButton edge="end">
                                     <DeleteForever/>
                                 </IconButton>

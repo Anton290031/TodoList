@@ -21971,7 +21971,8 @@ var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__.default
 });
 
 function TaskList(_ref) {
-  var tasks = _ref.tasks;
+  var tasks = _ref.tasks,
+      onDelete = _ref.onDelete;
   var classes = useStyles();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.default, {
     className: classes.root,
@@ -21990,6 +21991,9 @@ function TaskList(_ref) {
           id: labelId,
           primary: task.title
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_8__.default, {
+          onClick: function onClick() {
+            return onDelete(task.id);
+          },
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
             edge: "end",
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_icons__WEBPACK_IMPORTED_MODULE_10__.default, {})
@@ -22047,9 +22051,19 @@ function TodayTasks() {
       return setTasks(response.data);
     });
   }, []);
+
+  var onDelete = function onDelete(taskId) {
+    axios["delete"]("/api/task/" + taskId).then(function (response) {
+      if (response.status == 200) setTasks(tasks.filter(function (t) {
+        return t.id != taskId;
+      }));
+    });
+  };
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Layout__WEBPACK_IMPORTED_MODULE_1__.default, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_TaskList__WEBPACK_IMPORTED_MODULE_2__.default, {
-      tasks: tasks
+      tasks: tasks,
+      onDelete: onDelete
     })
   });
 }
