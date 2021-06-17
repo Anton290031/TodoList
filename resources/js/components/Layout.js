@@ -10,12 +10,16 @@ import {
     Toolbar,
     Typography
 } from "@material-ui/core";
+import {useHistory} from "react-router-dom";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
     },
     title: {
         flexGrow: 1,
@@ -27,28 +31,32 @@ const useStyles = makeStyles((theme) => ({
     drawerPaper: {
         width: drawerWidth,
     },
-    toolbar: theme.mixins.toolbar,
-    appBar: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
+    drawerContainer: {
+        overflow: 'auto',
     },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing(3),
+    },
+    toolbar: theme.mixins.toolbar,
 }));
 
 function Layout(props) {
     const classes = useStyles();
+    const history = useHistory();
 
     const onLogout = () => {
       axios.post('/api/logout', null, {
           headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token'),
-              Accept: "application/json",
+              // Authorization: 'Bearer ' + localStorage.getItem('token'),
+              // Accept: "application/json",
           }
       }).then(() => window.location.href = '/');
     };
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" className={classes.appBar}>
+            <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
                         TodoList
@@ -66,11 +74,12 @@ function Layout(props) {
                         <div className={classes.toolbar} />
                         <Divider />
                         <List>
-                            {['Today', 'All Tasks'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            ))}
+                            <ListItem button key="Today" onClick={() => history.push("/today_tasks")}>
+                                <ListItemText primary="Today" />
+                            </ListItem>
+                            <ListItem button key="All Tasks" onClick={() => history.push("/all_tasks")}>
+                                <ListItemText primary="All Tasks" />
+                            </ListItem>
                         </List>
                         <Divider />
                         <List>
@@ -83,7 +92,8 @@ function Layout(props) {
                     </Drawer>
             </nav>
 
-            <main className="py-4">
+            <main className={classes.content}>
+                <Toolbar />
                 {props.children}
             </main>
         </div>

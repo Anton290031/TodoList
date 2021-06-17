@@ -8,6 +8,8 @@ import {
 import Register from './Register';
 import Login from "./Login";
 import Layout from "./Layout";
+import TaskList from "./TaskList";
+import TodayTasks from "./TodayTasks";
 
 function App() {
     const [isAuth, setIsAuth] = useState(null);
@@ -20,8 +22,10 @@ function App() {
                     Authorization: 'Bearer ' + localStorage.getItem('token'),
                 }
             }).then((response) => {
-                if (response.status == 200)
+                if (response.status == 200){
+                    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
                     setIsAuth(true);
+                }
             }).catch((response) => {
                 localStorage.removeItem('token');
                 setIsAuth(false);
@@ -48,6 +52,7 @@ function App() {
         return (
             <Router>
                 <Switch>
+                    <Route path='/today_tasks' component={TodayTasks}/>
                     <Route path='/' component={Layout}/>
                 </Switch>
             </Router>
