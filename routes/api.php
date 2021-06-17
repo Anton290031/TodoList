@@ -20,8 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/login', [AuthController::class, "login"]);
-Route::post('/register', [AuthController::class, "register"]);
-Route::post('/logout', [AuthController::class, "logout"])->middleware('auth:api');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api');
 
-Route::middleware('auth:api')->apiResource('/task', TaskController::class);
+Route::middleware('auth:api')->group(function () {
+    Route::get('/task/today', [TaskController::class, 'today']);
+    Route::get('/task/week', [TaskController::class, 'week']);
+    Route::get('/task/month', [TaskController::class, 'month']);
+    Route::get('/task/year', [TaskController::class, 'year']);
+    Route::apiResource('/task', TaskController::class);
+});

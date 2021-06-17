@@ -4,11 +4,43 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+    public function today(Request $request)
+    {
+        return Auth::user()->tasks()
+            ->whereDate('deadline', Carbon::today())
+            ->get();
+    }
+
+    public function week(Request $request)
+    {
+        return Auth::user()->tasks()
+            ->whereDate('deadline', '>=', Carbon::today())
+            ->whereDate('deadline', '<=', Carbon::today()->addWeek())
+            ->get();
+    }
+
+    public function month(Request $request)
+    {
+        return Auth::user()->tasks()
+            ->whereDate('deadline', '>=', Carbon::today())
+            ->whereDate('deadline', '<=', Carbon::today()->addMonth())
+            ->get();
+    }
+
+    public function year(Request $request)
+    {
+        return Auth::user()->tasks()
+            ->whereDate('deadline', '>=', Carbon::today())
+            ->whereDate('deadline', '<=', Carbon::today()->addYear())
+            ->get();
+    }
+
     public function index(Request $request)
     {
         return Auth::user()->tasks()->get();
@@ -31,7 +63,9 @@ class TaskController extends Controller
 
     public function show($id)
     {
-        return Auth::user()->tasks()->where('id', $id)->first() ?? response('Not found', 404);
+        return Auth::user()->tasks()
+                ->where('id', $id)
+                ->first() ?? response('Not found', 404);
     }
 
     public function update(Request $request, $id)
@@ -53,6 +87,8 @@ class TaskController extends Controller
 
     public function destroy($id)
     {
-        return Auth::user()->tasks()->where('id', $id)->delete() ? response('', 200) : response('', 404);
+        return Auth::user()->tasks()
+            ->where('id', $id)
+            ->delete() ? response('', 200) : response('', 404);
     }
 }
