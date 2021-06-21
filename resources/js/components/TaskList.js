@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Checkbox,
@@ -7,11 +7,13 @@ import {
     ListItem,
     ListItemIcon,
     ListItemSecondaryAction,
-    ListItemText
+    ListItemText,
 } from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
 import {DeleteForever} from "@material-ui/icons";
+import EditTask from "./EditTask";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ( {
     root: {
         width: '100%',
         maxWidth: 360,
@@ -36,26 +38,36 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function TaskList({tasks, onDelete}) {
+function TaskList({tasks, onUpdate, onDelete}) {
     const classes = useStyles();
+    const [taskIndex, setTaskIndex] = useState(null);
 
     return (
+        <>
+            <EditTask
+                open={taskIndex != null}
+                onSubmit={(task) => {onUpdate(task.id, task); setTaskIndex(null);}}
+                onCancel={() => setTaskIndex(null)}
+                task={tasks[taskIndex]}
+            />
             <List className={classes.root}>
-                {tasks.map((task) => {
-                    const labelId = `checkbox-list-label-${task.id}`;
-
+                {tasks.map((task, index) => {
                     return (
-                        <ListItem key={task.id}>
+                        <ListItem key={index}>
                             <ListItemIcon>
                                 <Checkbox
-                                    edge="start"
-                                    defaultChecked={task.is_complete == 1}
-                                    inputProps={{ 'aria-labelledby': labelId }}
+                                    checked={task.is_complete == 1}
+                                    onInput={(event) => {
+                                        onUpdate(task.id, {is_complete: !event.target.checked});
+                                    }}
                                 />
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={task.title} />
-                            <ListItemSecondaryAction onClick={() => onDelete(task.id)}>
-                                <IconButton edge="end">
+                            <ListItemText primary={task.title} />
+                            <ListItemSecondaryAction>
+                                <IconButton onClick={() => setTaskIndex(index)}>
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton onClick={() => onDelete(task.id)}>
                                     <DeleteForever/>
                                 </IconButton>
                             </ListItemSecondaryAction>
@@ -63,6 +75,7 @@ function TaskList({tasks, onDelete}) {
                     );
                 })}
             </List>
+        </>
     );
 }
 

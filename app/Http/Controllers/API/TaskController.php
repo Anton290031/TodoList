@@ -74,8 +74,12 @@ class TaskController extends Controller
             'title' => 'string',
             'description' => 'string',
             'priority' => 'integer',
+            'deadline' => 'integer',
             'is_complete' => 'boolean',
         ]);
+
+        if ($request->exists('deadline'))
+            $data['deadline'] = Carbon::createFromTimestamp($data['deadline']);
 
         $task = Auth::user()->tasks()->where('id', $id)->first();
         if ($task == null)

@@ -46,12 +46,7 @@ function Layout(props) {
     const history = useHistory();
 
     const onLogout = () => {
-      axios.post('/api/logout', null, {
-          headers: {
-              // Authorization: 'Bearer ' + localStorage.getItem('token'),
-              // Accept: "application/json",
-          }
-      }).then(() => window.location.href = '/');
+      axios.post('/api/logout').then(() => window.location.href = '/');
     };
 
     return (
@@ -80,14 +75,6 @@ function Layout(props) {
                             <ListItem button key="All Tasks" onClick={() => history.push("/all_tasks")}>
                                 <ListItemText primary="All Tasks" />
                             </ListItem>
-                        </List>
-                        <Divider />
-                        <List>
-                            {['Projects'].map((text, index) => (
-                                <ListItem button key={text}>
-                                    <ListItemText primary={text} />
-                                </ListItem>
-                            ))}
                         </List>
                     </Drawer>
             </nav>

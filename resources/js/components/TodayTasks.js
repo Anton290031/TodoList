@@ -5,10 +5,15 @@ import TaskList from "./TaskList";
 function TodayTasks() {
     const [tasks, setTasks] = useState([]);
 
-    useEffect(() => {
-        axios.get("/api/task/today")
+    const getTasks = () => axios.get("/api/task/today")
             .then((response) => setTasks(response.data));
-    },[]);
+
+    useEffect(getTasks,[]);
+
+    const onUpdate = (taskId, task) => {
+        axios.put("/api/task/" + taskId, task)
+            .then(getTasks);
+    };
 
     const onDelete = (taskId) => {
         axios.delete("/api/task/" + taskId)
@@ -20,7 +25,7 @@ function TodayTasks() {
 
     return (
         <Layout>
-            <TaskList tasks={tasks} onDelete={onDelete}/>
+            <TaskList tasks={tasks} onUpdate={onUpdate} onDelete={onDelete}/>
         </Layout>
     );
 }
