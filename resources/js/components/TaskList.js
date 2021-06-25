@@ -17,8 +17,9 @@ import AddTask from "./AddTask";
 
 const useStyles = makeStyles((theme) => ( {
     root: {
+        margin: 'auto',
         width: '100%',
-        maxWidth: 360,
+        maxWidth: 1000,
         backgroundColor: theme.palette.background.paper,
     },
     paper: {
