@@ -3,11 +3,15 @@ import {
     Dialog, DialogActions, DialogContent, DialogTitle,
     TextField, Button
 } from "@material-ui/core";
+import 'date-fns';
+import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 function EditTask({open, onCancel, onSubmit, task}) {
     const [title, setTitle] = useState(task?.title);
     const [description, setDescription] = useState(task?.description);
     const [priority, setPriority] = useState(task?.priority);
+    const [deadline, setDeadline] = useState(new Date());
 
     return (
         <Dialog open={open} aria-labelledby="form-dialog-title">
@@ -24,7 +28,6 @@ function EditTask({open, onCancel, onSubmit, task}) {
                     fullWidth
                 />
                 <TextField
-                    autoFocus
                     margin="dense"
                     id="title"
                     label="Description"
@@ -34,21 +37,32 @@ function EditTask({open, onCancel, onSubmit, task}) {
                     fullWidth
                 />
                 <TextField
-                    autoFocus
                     margin="dense"
                     id="standard-number"
                     label="Priority"
                     type="number"
                     defaultValue={task?.priority}
                     onChange={(e) => setPriority(Number.parseInt(e.target.value))}
+                    fullWidth
                 />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDateTimePicker
+                        margin="normal"
+                        value={deadline}
+                        onChange={setDeadline}
+                        label="Deadline"
+                        onError={console.log}
+                        minDate={new Date()}
+                        format="yyyy/MM/dd hh:mm a"
+                    />
+                </MuiPickersUtilsProvider>
             </DialogContent>
             <DialogActions>
                 <Button color="primary" onClick={onCancel}>
                     Cancel
                 </Button>
                 <Button color="primary"
-                        onClick={() => onSubmit({...task, title, description, priority})}
+                        onClick={() => onSubmit({...task, title, description, priority, deadline: deadline.toISOString()})}
                 >
                     Save changes
                 </Button>
