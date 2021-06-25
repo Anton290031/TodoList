@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
+    Button,
     Checkbox,
     IconButton,
     List,
@@ -12,6 +13,7 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 import {DeleteForever} from "@material-ui/icons";
 import EditTask from "./EditTask";
+import AddTask from "./AddTask";
 
 const useStyles = makeStyles((theme) => ( {
     root: {
@@ -38,12 +40,18 @@ const useStyles = makeStyles((theme) => ( {
     },
 }));
 
-function TaskList({tasks, onUpdate, onDelete}) {
+function TaskList({tasks, onCreate, onUpdate, onDelete}) {
     const classes = useStyles();
+    const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
     const [taskIndex, setTaskIndex] = useState(null);
 
     return (
         <>
+            <AddTask
+                open={isAddTaskOpen}
+                onSubmit={(task) => {onCreate(task); setIsAddTaskOpen(false);}}
+                onCancel={() => setIsAddTaskOpen(false)}
+            />
             <EditTask
                 open={taskIndex != null}
                 onSubmit={(task) => {onUpdate(task.id, task); setTaskIndex(null);}}
@@ -74,6 +82,9 @@ function TaskList({tasks, onUpdate, onDelete}) {
                         </ListItem>
                     );
                 })}
+                <ListItem>
+                    <Button onClick={() => setIsAddTaskOpen(true)}>Add task</Button>
+                </ListItem>
             </List>
         </>
     );

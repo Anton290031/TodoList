@@ -49,11 +49,11 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'priority' => 'required',
-            'deadline' => 'required',
-            'project_id' => 'required',
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'priority' => 'required|integer|min:1|max:5',
+            'deadline' => 'required|date',
+            'project_id' => 'required|integer',
         ]);
 
         $data['user_id'] = Auth::user()->id;
@@ -74,12 +74,9 @@ class TaskController extends Controller
             'title' => 'string',
             'description' => 'string',
             'priority' => 'integer',
-            'deadline' => 'integer',
+            'deadline' => 'date',
             'is_complete' => 'boolean',
         ]);
-
-        if ($request->exists('deadline'))
-            $data['deadline'] = Carbon::createFromTimestamp($data['deadline']);
 
         $task = Auth::user()->tasks()->where('id', $id)->first();
         if ($task == null)

@@ -10,6 +10,13 @@ function TodayTasks() {
 
     useEffect(getTasks,[]);
 
+    const onCreate = (task) => {
+        console.log(task);
+        task.project_id = 1;
+        axios.post("/api/task", task)
+            .then(getTasks);
+    };
+
     const onUpdate = (taskId, task) => {
         axios.put("/api/task/" + taskId, task)
             .then(getTasks);
@@ -25,7 +32,7 @@ function TodayTasks() {
 
     return (
         <Layout>
-            <TaskList tasks={tasks} onUpdate={onUpdate} onDelete={onDelete}/>
+            <TaskList tasks={tasks} onCreate={onCreate} onUpdate={onUpdate} onDelete={onDelete}/>
         </Layout>
     );
 }
