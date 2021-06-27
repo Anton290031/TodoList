@@ -54,9 +54,11 @@ function Register({onRegister}) {
                 history.push('/');
             }
         }).catch((error) => {
+            if (error.response.status == 422){
+                console.log(error.response.status);
                 setErrorMessage(error.response.data.message);
-            setTimeout(() => setErrorMessage(null), 3000);
-            console.log(error.response.data);
+                setTimeout(() => setErrorMessage(null), 3000);
+            }
         });
     };
 
@@ -70,7 +72,7 @@ function Register({onRegister}) {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form onSubmit={onSubmit} method="post" className={classes.form} noValidate>
+                <form onSubmit={onSubmit} method="post" className={classes.form}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField

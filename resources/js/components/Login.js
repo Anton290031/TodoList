@@ -56,9 +56,11 @@ function Login({onLogin}) {
                 history.push('/');
             }
         }).catch((error) => {
-            setErrorMessage("Authentication failed");
-            setTimeout(() => setErrorMessage(null), 3000);
-            console.log(error.response.data);
+            if (error.response.status == 422){
+                console.log(error.response);
+                setErrorMessage("Authentication failed");
+                setTimeout(() => setErrorMessage(null), 3000);
+            }
         });
     };
 
@@ -72,7 +74,7 @@ function Login({onLogin}) {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form method="POST" onSubmit={onSubmit} className={classes.form} noValidate>
+                <form method="POST" onSubmit={onSubmit} className={classes.form}>
                     <TextField
                         variant="outlined"
                         margin="normal"
