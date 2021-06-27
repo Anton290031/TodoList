@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\Passport;
 
 class AuthController extends Controller
 {
@@ -16,6 +17,11 @@ class AuthController extends Controller
         ]);
 
         $remember_me = $request->boolean('rememberMe', false);
+
+        if ($remember_me)
+            Passport::personalAccessTokensExpireIn(now()->addYear());
+        else
+            Passport::personalAccessTokensExpireIn(now()->addDay());
 
         if (!Auth::attempt($credentials, $remember_me)) {
             return response('Authentication failed', 401);
