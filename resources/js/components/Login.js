@@ -52,8 +52,9 @@ function Login({onLogin}) {
             if (response.status == 200){
                 console.log(response.data);
                 localStorage.setItem('token', response.data);
+                window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data;
                 onLogin(true);
-                history.push('/');
+                history.push('/today_tasks');
             }
         }).catch((error) => {
             if (error.response.status == 422){

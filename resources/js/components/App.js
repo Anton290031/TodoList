@@ -9,14 +9,12 @@ import {
 import Register from './Register';
 import Login from "./Login";
 import Layout from "./Layout";
-import TaskList from "./TaskList";
 import TodayTasks from "./TodayTasks";
 
 function App() {
     const [isAuth, setIsAuth] = useState(null);
 
     useEffect(() => {
-        console.log(localStorage.getItem('token') != null);
         if(localStorage.getItem('token') != null){
             axios.get('/api/user', {
                 headers: {
@@ -24,13 +22,9 @@ function App() {
                 }
             }).then((response) => {
                 if (response.status == 200){
-                    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
                     setIsAuth(true);
                 }
-            }).catch((response) => {
-                localStorage.removeItem('token');
-                setIsAuth(false);
-            });
+            }).catch(() => setIsAuth(false));
         } else {
             setIsAuth(false);
         }
