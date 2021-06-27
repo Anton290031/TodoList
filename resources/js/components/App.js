@@ -4,6 +4,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect
 } from "react-router-dom";
 import Register from './Register';
 import Login from "./Login";
@@ -44,6 +45,7 @@ function App() {
                 <Switch>
                     <Route path='/login' render={() => <Login onLogin={setIsAuth}/>}/>
                     <Route path='/register' render={() => <Register onRegister={setIsAuth}/>}/>
+                    <Redirect to="/login" />
                 </Switch>
             </Router>
         );
