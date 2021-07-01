@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->integer("priority");
             $table->dateTime("deadline");
             $table->boolean("is_complete");
-            $table->bigInteger("project_id");
+            $table->unsignedBigInteger('project_id')->nullable();
             $table->unsignedBigInteger("user_id");
             $table->timestamps();
 
