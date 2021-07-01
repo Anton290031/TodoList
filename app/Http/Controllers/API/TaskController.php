@@ -53,7 +53,7 @@ class TaskController extends Controller
             'description' => 'required|string',
             'priority' => 'required|integer|min:1|max:5',
             'deadline' => 'required|date',
-            'project_id' => 'required|integer',
+            'project_id' => 'integer',
         ]);
 
         $data['user_id'] = Auth::user()->id;

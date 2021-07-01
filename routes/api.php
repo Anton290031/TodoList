@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/task/month', [TaskController::class, 'month']);
     Route::get('/task/year', [TaskController::class, 'year']);
     Route::apiResource('/task', TaskController::class);
+    Route::apiResource('/project', ProjectController::class);
 });

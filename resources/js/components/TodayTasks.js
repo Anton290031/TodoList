@@ -12,7 +12,6 @@ function TodayTasks() {
 
     const onCreate = (task) => {
         console.log(task);
-        task.project_id = 1;
         axios.post("/api/task", task)
             .then(getTasks);
     };
