@@ -43,7 +43,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return Auth::user()->projects()->where('id', $id)->first() ?? response('', 404);
+        return Auth::user()->projects()->where('id', $id)->with('tasks')->first() ?? response('', 404);
     }
 
     /**

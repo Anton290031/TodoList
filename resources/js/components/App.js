@@ -14,6 +14,7 @@ import WeekTasks from "./WeekTasks";
 import MonthTasks from "./MonthTasks";
 import YearTasks from "./YearTasks";
 import AllTasks from "./AllTasks";
+import Project from "./Project";
 
 function App() {
     const [isAuth, setIsAuth] = useState(null);
@@ -58,6 +59,7 @@ function App() {
                         <Route path='/month_tasks' component={MonthTasks}/>
                         <Route path='/year_tasks' component={YearTasks}/>
                         <Route path='/all_tasks' component={AllTasks}/>
+                        <Route path='/project/:id' component={Project}/>
                     </Switch>
                 </Layout>
             </Router>
