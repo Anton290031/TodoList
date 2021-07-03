@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import Layout from "./Layout";
 import TaskList from "./TaskList";
 
-function TodayTasks() {
+function WeekTasks() {
     const [tasks, setTasks] = useState([]);
 
-    const getTasks = () => axios.get("/api/task/today")
+    const getTasks = () => axios.get("/api/task/week")
             .then((response) => setTasks(response.data));
 
     useEffect(getTasks,[]);
@@ -34,4 +34,4 @@ function TodayTasks() {
     );
 }
 
-export default TodayTasks;
+export default WeekTasks;

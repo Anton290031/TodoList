@@ -10,6 +10,11 @@ import Register from './Register';
 import Login from "./Login";
 import Layout from "./Layout";
 import TodayTasks from "./TodayTasks";
+import WeekTasks from "./WeekTasks";
+import MonthTasks from "./MonthTasks";
+import YearTasks from "./YearTasks";
+import AllTasks from "./AllTasks";
+import Project from "./Project";
 
 function App() {
     const [isAuth, setIsAuth] = useState(null);
@@ -47,10 +52,16 @@ function App() {
     if (isAuth)
         return (
             <Router>
-                <Switch>
-                    <Route path='/today_tasks' component={TodayTasks}/>
-                    <Route path='/' component={Layout}/>
-                </Switch>
+                <Layout>
+                    <Switch>
+                        <Route path='/today_tasks' component={TodayTasks}/>
+                        <Route path='/week_tasks' component={WeekTasks}/>
+                        <Route path='/month_tasks' component={MonthTasks}/>
+                        <Route path='/year_tasks' component={YearTasks}/>
+                        <Route path='/all_tasks' component={AllTasks}/>
+                        <Route path='/project/:id' component={Project}/>
+                    </Switch>
+                </Layout>
             </Router>
         );
 }
