@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {
-    Button,
-    Checkbox, Collapse,
+    Collapse,
     IconButton,
     List,
     ListItem,
@@ -9,7 +8,7 @@ import {
     ListItemSecondaryAction,
     ListItemText,
 } from "@material-ui/core";
-import {DeleteForever, ExpandLess, ExpandMore, StarBorder} from "@material-ui/icons";
+import {DeleteForever, ExpandLess, ExpandMore} from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
 import {useHistory} from "react-router-dom";
 import ProjectForm from "./ProjectForm";
@@ -35,8 +34,13 @@ function ProjectList({projects, onCreate, onUpdate, onDelete}) {
             <Collapse in={open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     {projects.map((project) => (
-                        <ListItem button onClick={() => history.push("/project/" + project.id)}>
+                        <ListItem key={project.id} button onClick={() => history.push("/project/" + project.id)}>
                             <ListItemText primary={project.name} />
+                            <ListItemSecondaryAction>
+                                <IconButton edge="end" aria-label="add" onClick={() => onDelete(project.id)}>
+                                    <DeleteForever />
+                                </IconButton>
+                            </ListItemSecondaryAction>
                         </ListItem>
                     ))}
                 </List>

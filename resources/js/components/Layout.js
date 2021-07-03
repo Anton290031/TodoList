@@ -55,6 +55,10 @@ function Layout(props) {
         axios.post('/api/project', project).then(getProjects);
     };
 
+    const onDeleteProject = (id) => {
+        axios.delete('/api/project/' + id).then(getProjects);
+    };
+
     const onLogout = () => {
       axios.post('/api/logout').then(() => window.location.href = '/');
     };
@@ -95,7 +99,7 @@ function Layout(props) {
                                 <ListItemText primary="All Tasks" />
                             </ListItem>
 
-                            <ProjectList projects={projects} onCreate={onCreateProject}/>
+                            <ProjectList projects={projects} onCreate={onCreateProject} onDelete={onDeleteProject}/>
                         </List>
                     </Drawer>
             </nav>
