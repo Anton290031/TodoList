@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "postdeploy": [
+            "php artisan db:seed",
+            "php artisan passport:client --client"
+        ]
+    }
+}
