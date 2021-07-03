@@ -47,9 +47,13 @@ function Layout(props) {
     const history = useHistory();
     const [projects, setProjects] = useState([{name: "123"}]);
 
-    useEffect(() => {
-        axios.get('/api/project').then((response) => setProjects(response.data));
-    }, []);
+    const getProjects = () => axios.get('/api/project').then((response) => setProjects(response.data));
+
+    useEffect(getProjects, []);
+
+    const onCreateProject = (project) => {
+        axios.post('/api/project', project).then(getProjects);
+    };
 
     const onLogout = () => {
       axios.post('/api/logout').then(() => window.location.href = '/');
@@ -91,7 +95,7 @@ function Layout(props) {
                                 <ListItemText primary="All Tasks" />
                             </ListItem>
 
-                            <ProjectList projects={projects}/>
+                            <ProjectList projects={projects} onCreate={onCreateProject}/>
                         </List>
                     </Drawer>
             </nav>

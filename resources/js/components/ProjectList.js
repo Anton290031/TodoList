@@ -12,10 +12,12 @@ import {
 import {DeleteForever, ExpandLess, ExpandMore, StarBorder} from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
 import {useHistory} from "react-router-dom";
+import ProjectForm from "./ProjectForm";
 
 function ProjectList({projects, onCreate, onUpdate, onDelete}) {
     const history = useHistory();
     const [open, setOpen] = useState(false);
+    const [addProjectOpen, setAddProjectOpen] = useState(false);
 
     return (
         <>
@@ -25,7 +27,7 @@ function ProjectList({projects, onCreate, onUpdate, onDelete}) {
                 </ListItemIcon>
                 <ListItemText primary="Projects" />
                 <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="add">
+                    <IconButton edge="end" aria-label="add" onClick={() => setAddProjectOpen(true)}>
                         <AddIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
@@ -39,6 +41,11 @@ function ProjectList({projects, onCreate, onUpdate, onDelete}) {
                     ))}
                 </List>
             </Collapse>
+            <ProjectForm
+                open={addProjectOpen}
+                onSubmit={(project) => { onCreate(project); setAddProjectOpen(false);}}
+                onCancel={() => setAddProjectOpen(false)}
+            />
         </>
     );
 }
