@@ -51,13 +51,15 @@ function App() {
     if (isAuth)
         return (
             <Router>
-                <Switch>
-                    <Route path='/today_tasks' component={TodayTasks}/>
-                    <Route path='/week_tasks' component={WeekTasks}/>
-                    <Route path='/month_tasks' component={MonthTasks}/>
-                    <Route path='/year_tasks' component={YearTasks}/>
-                    <Route path='/all_tasks' component={AllTasks}/>
-                </Switch>
+                <Layout>
+                    <Switch>
+                        <Route path='/today_tasks' component={TodayTasks}/>
+                        <Route path='/week_tasks' component={WeekTasks}/>
+                        <Route path='/month_tasks' component={MonthTasks}/>
+                        <Route path='/year_tasks' component={YearTasks}/>
+                        <Route path='/all_tasks' component={AllTasks}/>
+                    </Switch>
+                </Layout>
             </Router>
         );
 }

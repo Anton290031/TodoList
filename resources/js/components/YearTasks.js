@@ -30,9 +30,7 @@ function YearTasks() {
     };
 
     return (
-        <Layout>
-            <TaskList tasks={tasks} onCreate={onCreate} onUpdate={onUpdate} onDelete={onDelete}/>
-        </Layout>
+        <TaskList tasks={tasks} onCreate={onCreate} onUpdate={onUpdate} onDelete={onDelete}/>
     );
 }
 
