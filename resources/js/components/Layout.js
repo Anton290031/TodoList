@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     AppBar,
-    Button,
+    Button, Collapse,
     Divider,
-    Drawer,
+    Drawer, IconButton,
     List,
-    ListItem, ListItemText,
+    ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader,
     makeStyles,
     Toolbar,
     Typography
 } from "@material-ui/core";
 import {useHistory} from "react-router-dom";
+import ProjectList from "./ProjectList";
 
 const drawerWidth = 240;
 
@@ -44,6 +45,11 @@ const useStyles = makeStyles((theme) => ({
 function Layout(props) {
     const classes = useStyles();
     const history = useHistory();
+    const [projects, setProjects] = useState([{name: "123"}]);
+
+    useEffect(() => {
+        axios.get('/api/project').then((response) => setProjects(response.data));
+    }, []);
 
     const onLogout = () => {
       axios.post('/api/logout').then(() => window.location.href = '/');
@@ -84,6 +90,8 @@ function Layout(props) {
                             <ListItem button key="All Tasks" onClick={() => history.push("/all_tasks")}>
                                 <ListItemText primary="All Tasks" />
                             </ListItem>
+
+                            <ProjectList projects={projects}/>
                         </List>
                     </Drawer>
             </nav>
