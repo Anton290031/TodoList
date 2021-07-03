@@ -72,6 +72,15 @@ function Layout(props) {
                             <ListItem button key="Today" onClick={() => history.push("/today_tasks")}>
                                 <ListItemText primary="Today" />
                             </ListItem>
+                            <ListItem button key="Week" onClick={() => history.push("/week_tasks")}>
+                                <ListItemText primary="Week" />
+                            </ListItem>
+                            <ListItem button key="Month" onClick={() => history.push("/month_tasks")}>
+                                <ListItemText primary="Month" />
+                            </ListItem>
+                            <ListItem button key="Year" onClick={() => history.push("/year_tasks")}>
+                                <ListItemText primary="Year" />
+                            </ListItem>
                             <ListItem button key="All Tasks" onClick={() => history.push("/all_tasks")}>
                                 <ListItemText primary="All Tasks" />
                             </ListItem>
