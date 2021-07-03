@@ -6,7 +6,7 @@ import {
 import 'date-fns';
 
 function ProjectForm({open, onSubmit, onCancel, project}) {
-    const [name, setName] = useState(project?.name ?? "");
+    const [name, setName] = useState(project?.name);
 
     return (
         <Dialog open={open} aria-labelledby="form-dialog-title">
@@ -17,6 +17,7 @@ function ProjectForm({open, onSubmit, onCancel, project}) {
                     margin="dense"
                     label="Name"
                     type="text"
+                    defaultValue={project?.name}
                     onChange={(e) => setName(e.target.value)}
                     fullWidth
                 />

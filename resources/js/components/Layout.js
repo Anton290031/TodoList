@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 function Layout(props) {
     const classes = useStyles();
     const history = useHistory();
-    const [projects, setProjects] = useState([{name: "123"}]);
+    const [projects, setProjects] = useState([]);
 
     const getProjects = () => axios.get('/api/project').then((response) => setProjects(response.data));
 
@@ -53,6 +53,10 @@ function Layout(props) {
 
     const onCreateProject = (project) => {
         axios.post('/api/project', project).then(getProjects);
+    };
+
+    const onUpdateProject = (id, project) => {
+        axios.put('/api/project/' + id, project).then(getProjects);
     };
 
     const onDeleteProject = (id) => {
@@ -99,7 +103,7 @@ function Layout(props) {
                                 <ListItemText primary="All Tasks" />
                             </ListItem>
 
-                            <ProjectList projects={projects} onCreate={onCreateProject} onDelete={onDeleteProject}/>
+                            <ProjectList projects={projects} onCreate={onCreateProject} onUpdate={onUpdateProject} onDelete={onDeleteProject}/>
                         </List>
                     </Drawer>
             </nav>
